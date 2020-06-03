@@ -1,33 +1,34 @@
 {
-  "name": "executely",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node -r esm ./src/index.js",
-    "dev": "nodemon -r esm ./src/index.js",
-    "lint": "eslint ./src --fix"
-  },
-  "keywords": [
-    "NodeJS",
-    "ExpressJS",
-    "MongoDB"
-  ],
-  "license": "MIT",
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "dotenv": "^6.2.0",
-    "esm": "^3.2.25",
-    "express": "^4.16.4",
-    "mongoose": "^5.4.11"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
   },
-  "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^4.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "nodemon": "^1.18.10",
-    "prettier": "^1.16.4"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

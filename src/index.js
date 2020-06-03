@@ -1,19 +1,17 @@
-// import mongoose from 'mongoose';
-import app from './app';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-// import environment variables
-require('dotenv').config({ path: '.env' });
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-// connect to the database
-// mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
-// mongoose.Promise = global.Promise;
-// mongoose.connection.on('error', err => {
-//   console.log(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
-// });
-
-// start the app
-
-app.set('port', process.env.PORT || 8000);
-const server = app.listen(app.get('port'), () => {
-  console.log(`Server running at ➡ http://localhost:${server.address().port} `);
-});
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
