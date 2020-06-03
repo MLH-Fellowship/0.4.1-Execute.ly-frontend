@@ -25,7 +25,7 @@ class OCRContainer extends Container {
     lang_code: "",
     lang_ver: "",
     lang_syntaxCode: "c_cpp", // used for syntax highlighting
-    editor_theme: "cobalt",
+    editor_theme: "github",
     editor_fontSize: 14,
     imageURL: null,
     loading: false,
@@ -96,10 +96,8 @@ class OCRContainer extends Container {
 
       if (!memory || !cpuTime) {
         this.setState({ error: output, loading: false });
-        message.error(output, 10);
       } else {
         this.setState({ output, loading: false });
-        message.success(output, 10);
       }
     } catch (error) {
       this.setState({ loading: false });

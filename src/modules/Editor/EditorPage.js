@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Row, Col, Button, Icon, Select } from "antd";
+import { Row, Col, Button, Icon, Select, Card } from "antd";
 import { Subscribe } from "unstated";
 import { Redirect } from "react-router-dom";
 
@@ -102,6 +102,30 @@ const FontSizeSelectList = props => (
   </Select>
 );
 
+const Error = ({ error }) => {
+  if (!error) return null;
+
+  return (
+    <Row>
+      <Card>
+        <strong style={{ color: 'red' }}>Output</strong>: {error}
+      </Card>
+    </Row>
+  )
+}
+
+const Output = ({ output }) => {
+  if (!output) return null;
+
+  return (
+    <Row>
+      <Card>
+        <strong>Output</strong>: {output}
+      </Card>
+    </Row>
+  )
+}
+
 const EditorPage = () => {
   return (
     <Subscribe to={[OCRContainer]}>
@@ -146,9 +170,11 @@ const EditorPage = () => {
                         block
                       >
                         Run Code
-                          <Icon type="play-square" />
+                        <Icon type="play-square" />
                       </Button>
                     </Row>
+                    <Output output={OCR.state.output} />
+                    <Error error={OCR.state.error} />
                   </div>
                 </Col>
               </Row>
