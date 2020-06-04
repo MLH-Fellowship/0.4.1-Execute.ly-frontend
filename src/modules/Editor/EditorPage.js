@@ -6,9 +6,9 @@ import { Redirect } from "react-router-dom";
 import MainLayout from "../../components/MainLayout";
 import Editor from "./components/Editor";
 import OCRContainer from "./OCRContainer";
-import ImagePlaceholder from "../../assets/image-placeholder.png";
+import ImagePlaceholder from "../../assets/image-placeholder.webp";
 import { languageList, themeList, fontSizeList } from "../../utils/constants";
-import { StyledPage } from './styledComponents'
+import { StyledEditorPage } from './styledComponents';
 
 const { Option } = Select;
 
@@ -87,7 +87,7 @@ const EditorPage = () => {
 
         return (
           <MainLayout>
-            <StyledPage>
+            <StyledEditorPage>
               <Row type="flex" gutter={[10, 10]}>
                 <Col xs={24} lg={10} className="image">
                   <img
@@ -132,7 +132,7 @@ const EditorPage = () => {
                   </div>
                 </Col>
               </Row>
-            </StyledPage>
+            </StyledEditorPage>
           </MainLayout>
         );
       }}

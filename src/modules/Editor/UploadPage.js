@@ -1,68 +1,14 @@
 import React, { useState } from "react";
-import { Layout, Row, Card, Button, Icon, Alert } from "antd";
-import styled from "styled-components";
+import { Layout, Row, Card, Button, Icon, Alert, Input, message } from "antd";
+import { useDropzone } from 'react-dropzone'
 import { Subscribe } from "unstated";
 
 import MainLayout from "../../components/MainLayout";
-import ImagePlaceholder from "../../assets/image-placeholder.png";
+import ImagePlaceholder from "../../assets/image-placeholder.webp";
 import OCRContainer from "./OCRContainer";
+import { StyledUploadPage, StyledDropzone } from './styledComponents';
 
 const { Content } = Layout;
-
-const StyledPage = styled.div`
-  padding-top: 1rem;
-  min-height: 100vh;
-
-  .image-card {
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      padding: 1rem;
-      max-height: 70vh;
-      object-fit: contain;
-      margin: 0 auto;
-    }
-
-    button {
-      width: 100%;
-    }
-
-    .next-btn {
-      margin-top: 1rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .buttons {
-    margin-top: 2rem;
-  }
-`;
-
-const StyledUploadButton = styled(Button)`
-  position: relative;
-  input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    opacity: 0;
-  }
-`;
-
-const UploadButton = props => (
-  <StyledUploadButton disabled={props.disabled}>
-    <input type="file" multiple={false} {...props} />
-    <Icon type="file-image" /> New Image
-  </StyledUploadButton>
-);
 
 const toBase64 = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -73,18 +19,39 @@ const toBase64 = file => new Promise((resolve, reject) => {
 
 const UploadImage = () => {
   const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
   const [filePreview, setFilePreview] = useState(null);
+  const { getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    accept: 'image/jpeg, image/png',
+    onDrop: async (files) => {
+      const file = files[0];
+      const base64 = await toBase64(file);
 
-  const handleFileChange = async e => {
-    const file = e.target.files[0];
-    const base64 = await toBase64(file);
+      // save the base64 image in local storage
+      localStorage.setItem('image', base64);
 
-    // save the base64 image in local storage
-    localStorage.setItem('image', base64);
+      setFile(file);
+      setFilePreview(base64);
+    }
+  })
 
-    setFile(file);
-    setFilePreview(base64);
-  };
+  const handleImageLoadFromUrl = async () => {
+    try {
+      const file = await fetch(imageUrl).then(res => res.blob());
+
+      const base64 = await toBase64(file);
+      localStorage.setItem('image', base64);
+
+      setFile(file);
+      setFilePreview(base64);
+
+    } catch (error) {
+      message.error(error.message || 'Invalid Image URL', 10);
+    }
+  }
+
+
 
   return (
     <Subscribe to={[OCRContainer]}>
@@ -96,20 +63,34 @@ const UploadImage = () => {
               type="info"
               closable
             />
-            <StyledPage>
-              <Row className="image-card">
-                <Card
-                  cover={
+            <StyledUploadPage>
+              <Row className="content">
+                <Card>
+                  {/*  Dropzone  */}
+                  <StyledDropzone {...getRootProps({ refKey: 'innerRef' })}>
+                    <input {...getInputProps()} />
+                    <p>Drag 'n' drop an image here, or click to select image</p>
+                  </StyledDropzone>
+
+                  <div>OR Enter Image URL</div>
+
+                  {/* Image Url Input */}
+                  <Row>
+                    <div className="image-url-input">
+                      <Input placeholder="Image URL" value={imageUrl} onChange={e => setImageUrl(e.target.value)} />
+                      <Button type="primary" onClick={handleImageLoadFromUrl} disabled={!imageUrl}>Load</Button>
+                    </div>
+                  </Row>
+
+                  {/* Image Preview */}
+                  <Card className="image-preview">
                     <img
                       src={filePreview || ImagePlaceholder}
                       alt="Placeholder"
                     />
-                  }
-                >
-                  <UploadButton
-                    onChange={handleFileChange}
-                    disabled={OCR.state.loading}
-                  />
+                  </Card>
+
+
                   <Row className="next-btn">
                     <Button
                       type="primary"
@@ -121,9 +102,10 @@ const UploadImage = () => {
                         Read Text
                       </Button>
                   </Row>
+
                 </Card>
               </Row>
-            </StyledPage>
+            </StyledUploadPage>
           </Content>
         </MainLayout>
       )}
