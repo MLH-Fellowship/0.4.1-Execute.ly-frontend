@@ -1,4 +1,6 @@
 @import "~antd/dist/antd.css";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
 
 body {
   margin: 0;
