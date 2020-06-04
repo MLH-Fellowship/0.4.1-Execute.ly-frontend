@@ -22,6 +22,7 @@ const showErrorMessage = error => {
 class OCRContainer extends Container {
   state = {
     code: "",
+    stdin: "",
     lang_code: "",
     lang_ver: "",
     lang_syntaxCode: "c_cpp", // used for syntax highlighting
@@ -35,6 +36,8 @@ class OCRContainer extends Container {
   };
 
   setCode = code => this.setState({ code });
+
+  setStdInput = stdin => this.setState({ stdin });
 
   setImageURL = imageURL => this.setState({ imageURL });
 
@@ -75,7 +78,7 @@ class OCRContainer extends Container {
 
   getOutputFromCode = async () => {
     try {
-      const { code, lang_code, lang_ver } = this.state;
+      const { code, lang_code, lang_ver, stdin } = this.state;
 
       // Validations
       if (!lang_ver || !lang_code) {
@@ -86,7 +89,8 @@ class OCRContainer extends Container {
       this.setState({ loading: true, error: "" });
       const hideLoadingMsg = message.loading("Executing code...", 0);
 
-      const data = { code, lang_code, lang_ver };
+      const data = { code, lang_code, lang_ver, stdin};
+      console.log("data", data)
       const res = await axios.post(`${SERVER_URL}/getOutput`, data);
 
       // hide loading Message
