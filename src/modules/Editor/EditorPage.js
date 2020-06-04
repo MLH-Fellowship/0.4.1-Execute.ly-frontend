@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { Row, Col, Button, Icon, Select, Card } from "antd";
+import { Row, Col, Button, Icon, Select, Card, Input } from "antd";
 import { Subscribe } from "unstated";
 import { Redirect } from "react-router-dom";
 
@@ -8,65 +7,10 @@ import MainLayout from "../../components/MainLayout";
 import Editor from "./components/Editor";
 import OCRContainer from "./OCRContainer";
 import ImagePlaceholder from "../../assets/image-placeholder.png";
-import {
-  languageList,
-  themeList,
-  fontSizeList,
-  breakPoints
-} from "../../utils/constants";
+import { languageList, themeList, fontSizeList } from "../../utils/constants";
+import { StyledPage } from './styledComponents'
 
 const { Option } = Select;
-
-const StyledPage = styled.div`
-  padding-top: 1rem;
-  min-height: 100vh;
-
-  .ant-row-flex {
-    padding: 1rem 2rem;
-    margin-top: 2rem;
-  }
-
-  .image {
-    display: flex;
-    justify-content: center;
-    background: #fff;
-    padding: 1rem;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .editor-container {
-    .editor__toolbar-top {
-      box-shadow: 0 6px 16px 0 var(--shadow-light);
-      display: flex;
-      flex-wrap: wrap;
-      background: #fff;
-      padding: 1rem 1.5rem 1rem 0;
-
-      .ant-select {
-        margin-bottom: 0.8rem;
-      }
-      .ant-select:not(:last-child) {
-        margin-right: 0.8rem;
-      }
-    }
-    .editor__toolbar-bottom {
-      box-shadow: 0 6px 16px 0 var(--shadow-light);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      background: #fff;
-      padding: 1rem 0;
-    }
-
-    @media (max-width: ${breakPoints.lg}) {
-      margin-top: 1rem;
-    }
-  }
-`;
 
 const LanguageSelectList = props => (
   <Select
@@ -126,6 +70,15 @@ const Output = ({ output }) => {
   )
 }
 
+const StandardInput = ({ value, onChange }) => {
+  return <Row>
+    <div className="editor__standard-input">
+      <label> Standard Input: </label>
+      <Input value={value} onChange={onChange} />
+    </div>
+  </Row>
+}
+
 const EditorPage = () => {
   return (
     <Subscribe to={[OCRContainer]}>
@@ -160,6 +113,7 @@ const EditorPage = () => {
                       theme={OCR.state.editor_theme}
                       fontSize={OCR.state.editor_fontSize}
                     />
+                    <StandardInput value={OCR.state.stdin} onChange={e => OCR.setStdInput(e.target.value)} />
                     <Row className="editor__toolbar-bottom">
                       <Button
                         type="primary"
