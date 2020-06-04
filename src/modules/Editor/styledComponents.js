@@ -18,6 +18,7 @@ export const StyledEditorPage = styled.div`
     img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
     }
   }
 
@@ -99,7 +100,7 @@ export const StyledUploadPage = styled.div`
     }
   }
 
-  .next-btn {
+  .buttons {
     margin-top: 1rem;
     width: 100%;
     display: flex;
@@ -107,6 +108,10 @@ export const StyledUploadPage = styled.div`
 
     button {
       width: 100%;
+
+      &:first-child {
+        margin-right: 1rem;
+      }
     }
   }
 `;

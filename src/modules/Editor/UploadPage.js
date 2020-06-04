@@ -3,24 +3,21 @@ import { Layout, Row, Card, Button, Icon, Alert, Input, message } from "antd";
 import { useDropzone } from 'react-dropzone'
 import { Subscribe } from "unstated";
 
+import { toBase64 } from '../../utils/helpers'
+
 import MainLayout from "../../components/MainLayout";
+import ImageCropModal from "./components/ImageCropModal";
 import ImagePlaceholder from "../../assets/image-placeholder.webp";
 import OCRContainer from "./OCRContainer";
 import { StyledUploadPage, StyledDropzone } from './styledComponents';
 
 const { Content } = Layout;
 
-const toBase64 = file => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => resolve(reader.result);
-  reader.onerror = error => reject(error);
-});
-
 const UploadImage = () => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [filePreview, setFilePreview] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     accept: 'image/jpeg, image/png',
@@ -50,8 +47,6 @@ const UploadImage = () => {
       message.error(error.message || 'Invalid Image URL', 10);
     }
   }
-
-
 
   return (
     <Subscribe to={[OCRContainer]}>
@@ -90,8 +85,16 @@ const UploadImage = () => {
                     />
                   </Card>
 
-
-                  <Row className="next-btn">
+                  {/* Buttons */}
+                  <Row className="buttons">
+                    <Button
+                      type="primary"
+                      disabled={!file}
+                      onClick={() => setIsModalVisible(true)}
+                    >
+                      <Icon type="file-image" />
+                       Crop Image
+                    </Button>
                     <Button
                       type="primary"
                       disabled={!file}
@@ -100,12 +103,25 @@ const UploadImage = () => {
                     >
                       <Icon type="file-search" />
                         Read Text
-                      </Button>
+                    </Button>
                   </Row>
-
                 </Card>
               </Row>
             </StyledUploadPage>
+
+            {/* Image Crop Modal */}
+            {isModalVisible && (
+              <ImageCropModal
+                isVisible={isModalVisible}
+                imageSrc={filePreview}
+                closeModal={() => setIsModalVisible(false)}
+                onCropSuccess={({ file, filePreview }) => {
+                  setIsModalVisible(false);
+                  setFile(file);
+                  setFilePreview(filePreview);
+                }}
+              />
+            )}
           </Content>
         </MainLayout>
       )}
