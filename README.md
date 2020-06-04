@@ -24,7 +24,7 @@ Edit and execute handwritten or any code in an image right in your browser.
 ## How to run this locally?
 
 * Clone this repository.
-* `yarbn install`
+* `yarn install`
 * `yarn start`
 
 
