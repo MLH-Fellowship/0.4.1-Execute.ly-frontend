@@ -11,7 +11,7 @@ Edit and execute handwritten or any code in an image right in your browser.
 * Supports automatic language detection.
 * Supports C, C++, Javascript and Python.
 
-
+![](https://media.giphy.com/media/gdkFelq0TLwoInOkjp/source.gif)
 
 The server code can be found [here](https://github.com/MLH-Fellowship/0.4.1-Execute.ly-server).
 
