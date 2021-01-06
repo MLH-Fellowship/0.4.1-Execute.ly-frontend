@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.22.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-ace": "^7.0.4",
