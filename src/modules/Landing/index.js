@@ -17,7 +17,7 @@ const LandingPage = () => {
             ✔️ Upload and crop image to execute <br />
             ✔️ Run your code in a sandbox environment <br />
             ✔️ Auto detects your language <br /> <br />
-            <Button type="primary" size="large" block>
+            <Button type="primary" size="large" className="button" block>
               <Link to="/upload" style={{ color: "#FFF" }}>
                 Get Started  <Icon type="double-right" />
               </Link>
