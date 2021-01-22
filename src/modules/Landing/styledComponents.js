@@ -22,6 +22,14 @@ export const StyledLandingPage = styled.div`
     margin: 0 22rem 0 0;
   }
 
+  .button{
+    border-radius: 12px;
+  }
+
+  .button:hover{
+    transform: scaleX(1.05);
+  }
+
   .landing-background {
     min-height: 100vh;
     background-image: url(${ImageBackground});
@@ -30,4 +38,16 @@ export const StyledLandingPage = styled.div`
     background-repeat: no-repeat;
     background-size: 130% 60%;
   }
+  
+  @media screen and (max-width: 901px){
+    .content-intro {
+      font-family: "Open Sans", sans-serif;
+      color: #a1664c;
+      font-size: 2.8vw;
+      text-align: left;
+      float: right;
+      margin: 0 2rem 0 0;
+    }
+  }
+
 `;
